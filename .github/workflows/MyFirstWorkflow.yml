@@ -8,10 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello World !"
-      
+
       - name: Checkout
         uses: actions/checkout@v6-beta
       - name: List files in repository
         run: |
             echo "The repository ${{ github.repository }} contains the following files:"
             tree
+
+      - name: My first Action step
+        uses: ActionsInAction/HelloWorld@v1
+        with:
+          WhoToGreet: Mona
