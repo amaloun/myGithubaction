@@ -15,8 +15,15 @@ jobs:
         run: |
             echo "The repository ${{ github.repository }} contains the following files:"
             tree
-
-      - name: My first Action step
-        uses: ActionsInAction/HelloWorld@v1
-        with:
-          WhoToGreet: Mona
+  generate-a-secret-output:
+    runs-on: ubuntu-latest
+    steps:
+      - id: sets-a-secret
+        name: Generate, mask, and output a secret
+        run: |
+          the_secret=$((RANDOM))
+          echo "::add-mask::$the_secret"
+          echo "secret-number=$the_secret" >> "$GITHUB_OUTPUT"
+      - name: Use that secret output (protected by a mask)
+        run: |
+          echo "the secret number is ${{ steps.sets-a-secret.outputs.secretnumber }}"
